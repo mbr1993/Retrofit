@@ -5,19 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.mbr.retrofit.databinding.RowItemBinding
 import uz.mbr.retrofit.user.User
+import uz.mbr.retrofit.user.post.Post
 
-class RvAdapter(private val list: List<User>) : RecyclerView.Adapter<RvAdapter.ViewHolder>() {
-
-    private var listener: OnUserClickedListener? = null
+class RvAdapter(private val list: List<Post>) : RecyclerView.Adapter<RvAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: RowItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun onBind(user: User) {
-            binding.textView.text = user.name
-            binding.textView2.text = user.phone
-            binding.root.setOnClickListener {
-                listener?.onUserClicked(adapterPosition)
-            }
+        fun onBind(post: Post) {
+            binding.textView.text = "${post.id} ${post.title}"
+            binding.textView2.text = post.body
         }
     }
 
@@ -30,13 +26,5 @@ class RvAdapter(private val list: List<User>) : RecyclerView.Adapter<RvAdapter.V
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(list[position])
-    }
-
-    fun setOnUserClickedListener(listener: OnUserClickedListener) {
-        this.listener = listener
-    }
-
-    fun interface OnUserClickedListener {
-        fun onUserClicked(position: Int)
     }
 }
